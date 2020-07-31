@@ -29,7 +29,8 @@ public class DruidConfig {
 	}
 	
 	/**
-	 * 配置druid的监控界面
+	 * 配置druid的监控界面</br>
+	 * 浏览器访问：http://localhost/druid/login.html即可进入监控页面</br>
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
