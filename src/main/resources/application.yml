@@ -1,0 +1,59 @@
+server:
+  port: 80
+  
+spring:
+  application:
+    name: seckill
+  # rabbitmq
+  rabbitmq:
+    host: 192.168.2.43
+    port: 5672
+    username: admin
+    password: admin
+  
+  # redis  
+  redis:
+    host: 192.168.2.43
+    port: 6379
+   
+  # 数据源 
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.2.43:3306/seckill?useSSL=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: zsl
+    type: com.alibaba.druid.pool.DruidDataSource
+    
+    # druid配置，Spring Boot 默认是不注入这些属性值的，需要自己新建配置类绑定
+    initialSize: 5   #初始化时建立物理连接的个数
+    minIdle: 5    #最小连接池数量
+    maxActive: 20   #最大连接池数量
+    maxWait: 60000    #获取连接时最大等待时间
+    timeBetweenEvictionRunsMillis: 60000    #Destory线程检测连接的间隔时间
+    minEvictableIdleTimeMillis: 300000    #连接保持空闲而不被驱逐的最长时间
+    validationQuery: SELECT 1 FROM DUAL    #检测连接是否有效的sql
+    testWhileIdle: true
+    testOnBorrow: false   #申请连接时执行validationQuery检测连接是否有效
+    testOnReturn: false    #归还连接时执行validationQuery检测连接是否有效
+    poolPreparedStatements: true   #是否缓存preparedStatements
+ 
+    # 配置监控统计拦截的filters，stat:监控统计、log4j：日志记录、wall：防御sql注入
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  
+  # JPA相关配置  
+  jpa:
+    show-sql: false # 打印sql
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy # 驼峰命名转换
+
+# 消息队列名 & 交换机名
+rabbitmq: 
+    queue: 
+      name: test_queue
+    exchange: 
+      name: test_exchange
